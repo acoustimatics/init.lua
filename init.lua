@@ -21,13 +21,27 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    -- Dracula colorscheme
     "Mofiqul/dracula.nvim",
+
+    -- Telescope
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.3",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
-    "nvim-treesitter/nvim-treesitter"
+
+    -- Treesitter
+    "nvim-treesitter/nvim-treesitter",
+
+    -- Lua Line
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            theme = 'auto'
+        }
+    }
 });
 
 vim.cmd[[colorscheme dracula]]

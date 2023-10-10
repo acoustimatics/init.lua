@@ -31,8 +31,18 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" }
     },
 
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+        }
+    },
+
     -- Treesitter
-    "nvim-treesitter/nvim-treesitter",
+    {
+        "nvim-treesitter/nvim-treesitter"
+    },
 
     -- Lua Line
     {
@@ -44,15 +54,15 @@ require("lazy").setup({
     }
 });
 
-vim.cmd[[colorscheme dracula]]
+require("mason").setup()
 
-do
-    local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-end
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup()
+mason_lspconfig.setup_handlers {
+    function(server_name) -- default handler
+        require("lspconfig")[server_name].setup {}
+    end,
+}
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
@@ -91,4 +101,10 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
+vim.cmd[[colorscheme dracula]]

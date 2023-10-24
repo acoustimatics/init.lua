@@ -13,9 +13,12 @@ return {
         -- Optional
         "markdown",
         "rust",
+        "html",
+        "css",
+        "javascript"
       },
       sync_install = false,
-      auto_install = true,
+      auto_install = false,
       ignore_install = { },
       highlight = {
         enable = true,

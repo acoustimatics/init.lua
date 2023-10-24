@@ -1,3 +1,18 @@
+local on_attach = function (_, bufnr)
+  local nmap = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  nmap("n", "<leader>lr", vim.lsp.buf.rename, "Rename")
+  nmap("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
+end
+
+local setup_handler = function (server_name)
+  require("lspconfig")[server_name].setup({
+    on_attach = on_attach,
+  })
+end
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -9,10 +24,6 @@ return {
 
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup()
-    mason_lspconfig.setup_handlers({
-      function (server_name) -- default handler
-        require("lspconfig")[server_name].setup({})
-      end,
-    })
+    mason_lspconfig.setup_handlers({ setup_handler })
   end,
 }

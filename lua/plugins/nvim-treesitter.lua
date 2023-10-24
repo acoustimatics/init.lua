@@ -11,6 +11,7 @@ return {
         "query",
 
         -- Optional
+        "markdown",
         "rust",
       },
       sync_install = false,

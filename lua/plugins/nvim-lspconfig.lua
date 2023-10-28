@@ -1,3 +1,4 @@
+-- Callback for when LSP attaches to a buffer.
 local on_attach = function (_, bufnr)
   local nmap = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
@@ -7,6 +8,7 @@ local on_attach = function (_, bufnr)
   nmap("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
 end
 
+-- Setup handler for Mason's setup_handlers function.
 local setup_handler = function (server_name)
   require("lspconfig")[server_name].setup({
     on_attach = on_attach,

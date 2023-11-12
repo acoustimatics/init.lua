@@ -4,8 +4,11 @@ local on_attach = function (_, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap("<leader>lr", vim.lsp.buf.rename, "Rename")
-  nmap("<leader>la", vim.lsp.buf.code_action, "Code Action")
+  nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
+  nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+  local builtin = require("telescope.builtin")
+  nmap("<leader>cd", builtin.lsp_definitions, "Definitions")
 end
 
 -- Setup handler for Mason's setup_handlers function.
@@ -21,14 +24,6 @@ return {
     -- LSP management
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-
-    -- LSP progress UI
-    {
-      "j-hui/fidget.nvim",
-      tag = "legacy",
-      event = "LspAttach",
-      opts = { },
-    },
 
     -- Neovim Lua help
     { "folke/neodev.nvim", opts = {} }

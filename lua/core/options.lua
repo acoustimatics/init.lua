@@ -20,3 +20,6 @@ vim.opt.termguicolors = true
 
 -- UI
 vim.opt.signcolumn = "yes"
+
+-- Disable "inline" diagnostic messages.
+vim.diagnostic.config({ virtual_text = false })

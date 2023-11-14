@@ -4,11 +4,13 @@ local on_attach = function (_, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
+  nmap("<leader>cR", vim.lsp.buf.rename, "Rename")
   nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
   local builtin = require("telescope.builtin")
   nmap("<leader>cd", builtin.lsp_definitions, "Definitions")
+  nmap("<leader>cr", builtin.lsp_references, "References")
+  nmap("<leader>cs", builtin.lsp_document_symbols, "Document Symbols")
 end
 
 -- Setup handler for Mason's setup_handlers function.

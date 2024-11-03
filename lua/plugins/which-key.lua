@@ -1,13 +1,16 @@
 return {
   "folke/which-key.nvim",
-  init = function ()
-    vim.opt.timeout = true
-    vim.opt.timeoutlen = 1000
-
-    require("which-key").register({
-      ["<leader>c"] = { name = "Code", _ = "which_key_ignore" },
-    })
-  end,
-  opts = { },
+  event = "VeryLazy",
+  opts = {
+  },
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
+    },
+  },
 }
 

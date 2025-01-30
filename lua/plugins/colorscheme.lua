@@ -1,7 +1,7 @@
 return {
-  "navarasu/onedark.nvim",
+  "Mofiqul/vscode.nvim",
   priority = 1000,
   config = function ()
-    vim.cmd.colorscheme "onedark"
+    vim.cmd.colorscheme "vscode"
   end,
 }

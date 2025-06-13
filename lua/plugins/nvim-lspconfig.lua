@@ -34,7 +34,6 @@ return {
     require("mason").setup()
 
     local mason_lspconfig = require("mason-lspconfig")
-    mason_lspconfig.setup()
-    mason_lspconfig.setup_handlers({ setup_handler })
+    mason_lspconfig.setup({ setup_handler })
   end,
 }

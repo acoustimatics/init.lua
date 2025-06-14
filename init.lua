@@ -1,5 +1,16 @@
-require("core.options")
-require("core.keymaps")
-require("plugins-init")
+-- Tabs
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
 
-vim.cmd.colorscheme "dracula"
+-- Line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+-- Search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Colors
+vim.opt.termguicolors = true

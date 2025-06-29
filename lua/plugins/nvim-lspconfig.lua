@@ -1,39 +1,37 @@
--- Callback for when LSP attaches to a buffer.
-local on_attach = function (_, bufnr)
-  local nmap = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  nmap("<leader>cR", vim.lsp.buf.rename, "Rename")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
-
-  local builtin = require("telescope.builtin")
-  nmap("<leader>cd", builtin.lsp_definitions, "Definitions")
-  nmap("<leader>cr", builtin.lsp_references, "References")
-  nmap("<leader>cs", builtin.lsp_document_symbols, "Document Symbols")
-end
-
--- Setup handler for Mason's setup_handlers function.
-local setup_handler = function (server_name)
-  require("lspconfig")[server_name].setup({
-    on_attach = on_attach,
-  })
-end
-
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
-    -- LSP management
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-
-    -- Neovim Lua help
-    { "folke/neodev.nvim", opts = {} }
+    { "mason-org/mason.nvim", opts = {} },
+    "mason-org/mason-lspconfig.nvim",
   },
   config = function ()
-    require("mason").setup()
+    --
+    -- LSP Attach event handler.
+    --
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup('config-lsp-attach', { clear = true }),
+      callback = function (event)
+        local nmap = function(keys, func, desc)
+          vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
+        end
 
-    local mason_lspconfig = require("mason-lspconfig")
-    mason_lspconfig.setup({ setup_handler })
-  end,
+        nmap("<leader>cR", vim.lsp.buf.rename, "Rename")
+        nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+        local builtin = require("telescope.builtin")
+        nmap("<leader>cd", builtin.lsp_definitions, "Definitions")
+        nmap("<leader>cr", builtin.lsp_references, "References")
+        nmap("<leader>cs", builtin.lsp_document_symbols, "Document Symbols")
+      end,
+    }) -- LspAttach auto-command
+
+    --
+    -- Mason setup.
+    --
+    require("mason-lspconfig").setup({
+      handlers = function (server_name)
+        require("lspconfig")[server_name].setup({})
+      end,
+    })
+  end, -- config
 }
